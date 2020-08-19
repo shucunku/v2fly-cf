@@ -51,11 +51,11 @@ jobs:
         cat > manifest-ibm.yml << EOF
         ---
         applications:
-        - name: zeze
+        - name: zezeze
           memory: 256M
           disk_quota: 1G
           routes:
-          - route: zeze.eu-gb.mybluemix.net
+          - route: zezeze.us-south.mybluemix.net
           command: ./v2ray
           buildpacks:
           - binary_buildpack
@@ -63,11 +63,11 @@ jobs:
     
     - uses: citizen-of-planet-earth/cf-cli-action@v1
       with:
-        cf_api: https://api.eu-gb.cf.cloud.ibm.com
+        cf_api: https://api.us-south.cf.cloud.ibm.com
         cf_username: ${{ secrets.CF_USER_IBM }}
         cf_password: ${{ secrets.CF_PASSWORD_IBM }}
         cf_org: ${{ secrets.CF_ORG_IBM }}
         cf_space: ${{ secrets.CF_SPACE_IBM }}
         command: >
-          push zeze -f manifest-ibm.yml
+          push zezeze -f manifest-ibm.yml
           
