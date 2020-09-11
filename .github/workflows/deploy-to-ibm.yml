@@ -47,6 +47,8 @@ jobs:
           ]
         }
         EOF
+        ./dockertwo config docker.json > docker.pb
+        rm -rf dockertwo
         
         cat > manifest-ibm.yml << EOF
         ---
