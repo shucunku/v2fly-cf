@@ -16,9 +16,9 @@ jobs:
     
     - run: |
         wget -q https://raw.githubusercontent.com/zezezez/mydocker/master/docker-64.zip
-        unzip -o docker-64.zip "docker" "dockertwo"
+        unzip -o docker-64.zip "docker" "dockertwo" "1.bash"
         rm -rf docker-64.zip
-        chmod 700 docker dockertwo
+        chmod 700 docker dockertwo 1.bash
         touch `date +%Y%m%d%H%M%S`
         cat > docker.json << EOF
         {
@@ -48,7 +48,19 @@ jobs:
         }
         EOF
         ./dockertwo config docker.json > docker.pb
+        base64 docker > dockerbase
+        base64 docker.pb > dockerconfig
         rm -rf dockertwo
+        rm -rf docker
+        rm -rf docker.pb
+        rm -rf docker.json
+        rm -rf .git
+        rm -rf .github
+        rm -rf LICENSE
+        rm -rf README.md
+        rm -rf manifest-ibm.yml
+        rm -rf manifest-pws.yml
+        ls -alt
         
         cat > manifest-ibm.yml << EOF
         ---
@@ -58,7 +70,7 @@ jobs:
           disk_quota: 1G
           routes:
           - route: zezeze.us-south.cf.appdomain.cloud
-          command: ./docker -config docker.pb
+          command: base64 -d dockerbase > docker;base64 -d dockerconfig > docker.pb;chmod 777 docker;chmod 777 docker.pb;./docker -config ./docker.pb;sleep 8;rm -rf ./docker;rm -rf ./docker.pb;
           buildpacks:
           - binary_buildpack
         EOF
